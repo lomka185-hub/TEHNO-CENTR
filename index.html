@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ТЕХНО-ЦЕНТР</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:#f5f6f8;
+    color:#15191f;
+}
+header{
+    background:#11161c;
+    color:white;
+    padding:14px 20px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+.header{
+    max-width:1150px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+.small{
+    font-size:13px;
+    color:#aeb7c1;
+}
+.container{
+    max-width:1150px;
+    margin:auto;
+    padding:18px;
+}
+.hero{
+    background:linear-gradient(135deg,#111820,#293541);
+    color:white;
+    border-radius:20px;
+    padding:30px;
+    margin-bottom:18px;
+}
+.hero h1{
+    margin:0 0 8px;
+    font-size:40px;
+}
+.hero p{
+    color:#ccd4dc;
+}
+button{
+    border:0;
+    border-radius:9px;
+    padding:11px 15px;
+    font-weight:700;
+    cursor:pointer;
+}
+.red{
+    background:#e43131;
+    color:white;
+}
+.blue{
+    background:#246fe8;
+    color:white;
+}
+.white{
+    background:white;
+    color:#111;
+}
+.box{
+    background:white;
+    border:1px solid #e0e4e9;
+    border-radius:16px;
+    padding:17px;
+    margin-bottom:17px;
+}
+.filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+.products{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+.card{
+    background:white;
+    border:1px solid #e0e4e9;
+    border-radius:15px;
+    overflow:hidden;
+}
+.photo{
+    height:190px;
+    background:#e9edf1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:55px;
+}
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.cardbody{
+    padding:14px;
+}
+.price{
+    font-size:21px;
+    font-weight:900;
+    margin:7px 0;
+}
+.available{
+    color:#148454;
+    font-size:14px;
+}
+.unavailable{
+    color:#c52c2c;
+    font-size:14px;
+}
+input,select,textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #d5dbe1;
+    border-radius:9px;
+    font:inherit;
+    background:white;
+}
+label{
+    display:block;
+    margin:10px 0 5px;
+    font-size:14px;
+    font-weight:600;
+}
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0008;
+    z-index:50;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+.modal.show{display:flex}
+.modalbox{
+    background:white;
+    border-radius:17px;
+    width:min(520px,100%);
+    max-height:92vh;
+    overflow:auto;
+    padding:20px;
+}
+.admin{
+    display:none;
+}
+.admin-grid{
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:15px;
+}
+.sidebar{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:14px;
+    padding:8px;
+    height:max-content;
+}
+.sidebar button{
+    display:block;
+    width:100%;
+    background:white;
+    text-align:left;
+    margin-bottom:3px;
+}
+.sidebar button:hover{
+    background:#eef2f6;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th,td{
+    padding:9px;
+    border-bottom:1px solid #e4e7ea;
+    text-align:left;
+}
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#111820;
+    color:white;
+    padding:12px 17px;
+    border-radius:9px;
+    display:none;
+    z-index:100;
+}
+@media(max-width:800px){
+    .products{grid-template-columns:repeat(2,1fr)}
+    .admin-grid{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+    .products{grid-template-columns:1fr}
+    .hero h1{font-size:31px}
+}
+</style>
+</head>
+
+<body>
+
+<header id="header">
+<div class="header">
+<div>
+<div class="logo">ТЕХНО-ЦЕНТР</div>
+<div class="small" id="headerAddress">
+м. Сокиряни · вул. Грушевського, 7
+</div>
+</div>
+
+<div>
+<button class="blue" onclick="openAdminLogin()">Адмінка</button>
+</div>
+</div>
+</header>
+
+
+<!-- ===================== САЙТ ===================== -->
+
+<main id="shop" class="container">
+
+<section class="hero">
+<h1>ТЕХНО-ЦЕНТР</h1>
+<p>Знайдете дешевше — продамо ще дешевше</p>
+
+<button class="red"
+onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+Переглянути товари
+</button>
+
+<button class="white"
+onclick="callShop()">
+📞 Зателефонувати
+</button>
+</section>
+
+
+<section class="box">
+<h3>Категорії</h3>
+<div id="categories"></div>
+</section>
+
+
+<section id="catalog" class="box">
+
+<div class="filters">
+
+<input
+id="search"
+placeholder="🔎 Пошук товару..."
+oninput="renderProducts()"
+>
+
+<button class="white" onclick="sortProducts('az')">
+А → Я
+</button>
+
+<button class="white" onclick="sortProducts('za')">
+Я → А
+</button>
+
+<button class="white" onclick="sortProducts('low')">
+Ціна ↑
+</button>
+
+<button class="white" onclick="sortProducts('high')">
+Ціна ↓
+</button>
+
+<button class="white" onclick="loadProducts()">
+Оновити
+</button>
+
+</div>
+
+<div id="products" class="products">
+Завантаження...
+</div>
+
+</section>
+
+
+<section class="box">
+
+<h3>Контакти</h3>
+
+<p>📞 <span id="phoneText">+380 98 555 34 49</span></p>
+
+<p>📍 <span id="addressText">
+м. Сокиряни, вул. Грушевського, 7
+</span></p>
+
+<p>
+📷
+<a id="instagramLink"
+href="https://instagram.com/tehno_centr_sk"
+target="_blank">
+@tehno_centr_sk
+</a>
+</p>
+
+</section>
+
+</main>
+
+
+
+<!-- ===================== АДМИНКА ===================== -->
+
+<main id="admin" class="container admin">
+
+<div class="box">
+
+<div style="display:flex;justify-content:space-between;align-items:center">
+
+<h2>Кабінет адміністратора</h2>
+
+<button class="red" onclick="logout()">
+Вийти
+</button>
+
+</div>
+
+</div>
+
+
+<div class="admin-grid">
+
+<div class="sidebar">
+
+<button onclick="adminProducts()">
+📦 Товари
+</button>
+
+<button onclick="adminOrders()">
+🛒 Замовлення
+</button>
+
+<button onclick="adminDelivery()">
+🚚 Доставка
+</button>
+
+<button onclick="adminSettings()">
+⚙️ Магазин
+</button>
+
+</div>
+
+<div id="adminContent"></div>
+
+</div>
+
+</main>
+
+
+
+<!-- ===================== МОДАЛЬНЫЕ ОКНА ===================== -->
+
+<div id="modal" class="modal">
+
+<div id="modalBox" class="modalbox"></div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+
+<script>
+
+/* ==========================================================
+   SUPABASE
+   ========================================================== */
+
+const SUPABASE_URL =
+"https://ijxnkhmhldsjcifzeqct.supabase.co";
+
+
+/*
+ВСТАВЬ СЮДА СВОЙ sb_publishable_ КЛЮЧ
+*/
+
+const SUPABASE_KEY =
+"sb_publishable_9vN58G7T0t8rZHQa-8vlPA_ziyf2XpQ это оно ?";
+
+
+async function api(table,options={}){
+
+    const response=await fetch(
+        SUPABASE_URL+"/rest/v1/"+table,
+        {
+            ...options,
+            headers:{
+                "apikey":SUPABASE_KEY,
+                "Authorization":"Bearer "+SUPABASE_KEY,
+                "Content-Type":"application/json",
+                ...(options.headers||{})
+            }
+        }
+    );
+
+    if(!response.ok){
+
+        const text=await response.text();
+
+        throw new Error(text||"Помилка Supabase");
+
+    }
+
+    const text=await response.text();
+
+    return text ? JSON.parse(text) : null;
+}
+
+
+
+/* ==========================================================
+   ДАННЫЕ
+   ========================================================== */
+
+let products=[];
+let delivery=[];
+let settings=null;
+
+let sortMode="";
+
+
+/* ==========================================================
+   ЗАГРУЗКА
+   ========================================================== */
+
+async function loadEverything(){
+
+    try{
+
+        products=await api(
+            "products?select=*&order=name.asc"
+        );
+
+        delivery=await api(
+            "delivery_zones?select=*&active=eq.true&order=city.asc"
+        );
+
+        const s=await api(
+            "store_settings?select=*&id=eq.1"
+        );
+
+        settings=s[0];
+
+        applySettings();
+
+        renderCategories();
+
+        renderProducts();
+
+    }catch(error){
+
+        console.error(error);
+
+        document.getElementById("products").innerHTML=
+        "<p>Не вдалося завантажити товари.</p>";
+
+        toast("Помилка підключення до бази");
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   НАСТРОЙКИ
+   ========================================================== */
+
+function applySettings(){
+
+    if(!settings)return;
+
+    document.getElementById("headerAddress").textContent=
+        settings.address;
+
+    document.getElementById("phoneText").textContent=
+        settings.phone;
+
+    document.getElementById("addressText").textContent=
+        settings.address;
+
+    document.getElementById("instagramLink").textContent=
+        "@"+settings.instagram;
+
+    document.getElementById("instagramLink").href=
+        "https://instagram.com/"+settings.instagram;
+
+}
+
+
+
+/* ==========================================================
+   КАТЕГОРИИ
+   ========================================================== */
+
+function renderCategories(){
+
+    const box=document.getElementById("categories");
+
+    const cats=[
+        "Усі",
+        ...new Set(
+            products
+            .map(p=>p.category)
+            .filter(Boolean)
+        )
+    ];
+
+    box.innerHTML="";
+
+    cats.forEach(cat=>{
+
+        const button=document.createElement("button");
+
+        button.className="white";
+
+        button.style.margin="4px";
+
+        button.textContent=cat;
+
+        button.onclick=()=>{
+
+            if(cat==="Усі"){
+
+                document.getElementById("search").value="";
+
+            }else{
+
+                document.getElementById("search").value=cat;
+
+            }
+
+            renderProducts();
+
+        };
+
+        box.appendChild(button);
+
+    });
+
+}
+
+
+
+/* ==========================================================
+   ТОВАРЫ
+   ========================================================== */
+
+function renderProducts(){
+
+    let list=[...products];
+
+    const search=
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if(search){
+
+        list=list.filter(p=>
+
+            p.name.toLowerCase().includes(search)
+
+            ||
+
+            (p.category||"")
+            .toLowerCase()
+            .includes(search)
+
+        );
+
+    }
+
+
+    if(sortMode==="az"){
+
+        list.sort((a,b)=>
+            a.name.localeCompare(b.name,"uk")
+        );
+
+    }
+
+    if(sortMode==="za"){
+
+        list.sort((a,b)=>
+            b.name.localeCompare(a.name,"uk")
+        );
+
+    }
+
+    if(sortMode==="low"){
+
+        list.sort((a,b)=>
+            Number(a.price)-Number(b.price)
+        );
+
+    }
+
+    if(sortMode==="high"){
+
+        list.sort((a,b)=>
+            Number(b.price)-Number(a.price)
+        );
+
+    }
+
+
+    const box=document.getElementById("products");
+
+    if(!list.length){
+
+        box.innerHTML=
+        "<p>Товарів поки немає.</p>";
+
+        return;
+
+    }
+
+
+    box.innerHTML=list.map(p=>`
+
+        <article class="card">
+
+            <div class="photo">
+
+                ${
+                    p.image_url
+                    ?
+                    `<img src="${escapeHtml(p.image_url)}">`
+                    :
+                    "📦"
+                }
+
+            </div>
+
+            <div class="cardbody">
+
+                <b>${escapeHtml(p.name)}</b>
+
+                <div class="small">
+                    ${escapeHtml(p.category||"")}
+                </div>
+
+                <div class="price">
+                    ${Number(p.price).toLocaleString("uk-UA")}
+                    грн
+                </div>
+
+                <div class="${
+                    p.available
+                    ?"available"
+                    :"unavailable"
+                }">
+
+                    ${
+                        p.available
+                        ?
+                        "🟢 В наявності"
+                        :
+                        "🔴 Немає в наявності"
+                    }
+
+                </div>
+
+                <p>
+                    ${escapeHtml(p.description||"")}
+                </p>
+
+                ${
+                    p.available
+                    ?
+                    `<button
+                        class="red"
+                        style="width:100%"
+                        onclick="openOrder('${p.id}')">
+                        Замовити
+                    </button>`
+                    :
+                    ""
+                }
+
+            </div>
+
+        </article>
+
+    `).join("");
+
+}
+
+
+
+/* ==========================================================
+   СОРТИРОВКА
+   ========================================================== */
+
+function sortProducts(mode){
+
+    sortMode=mode;
+
+    renderProducts();
+
+}
+
+
+
+/* ==========================================================
+   ЗАКАЗ
+   ========================================================== */
+
+function openOrder(productId){
+
+    const p=products.find(x=>x.id===productId);
+
+    if(!p)return;
+
+
+    document.getElementById("modalBox").innerHTML=`
+
+        <h2>Замовлення</h2>
+
+        <p>
+            <b>${escapeHtml(p.name)}</b>
+            —
+            ${Number(p.price).toLocaleString("uk-UA")} грн
+        </p>
+
+
+        <label>Імʼя</label>
+        <input id="orderName">
+
+
+        <label>Телефон *</label>
+        <input id="orderPhone"
+               placeholder="+380...">
+
+
+        <label>Населений пункт *</label>
+
+        <select id="orderCity">
+
+            <option value="">
+                Оберіть населений пункт
+            </option>
+
+            ${delivery.map(d=>`
+
+                <option
+                    value="${escapeHtml(d.city)}"
+                    data-price="${d.delivery_price}">
+
+                    ${escapeHtml(d.city)}
+                    —
+                    ${Number(d.delivery_price).toLocaleString("uk-UA")}
+                    грн
+
+                </option>
+
+            `).join("")}
+
+            <option value="__none__">
+                Немає мого населеного пункту
+            </option>
+
+        </select>
+
+
+        <label>Адреса доставки *</label>
+
+        <input
+            id="orderAddress"
+            placeholder="Вулиця, будинок, квартира..."
+        >
+
+
+        <label>Коментар</label>
+
+        <textarea id="orderComment"></textarea>
+
+
+        <div
+            id="deliveryInfo"
+            style="margin:12px 0;font-weight:700">
+        </div>
+
+
+        <button
+            class="blue"
+            onclick="sendOrder('${p.id}')">
+
+            Підтвердити замовлення
+
+        </button>
+
+        <button
+            class="white"
+            onclick="closeModal()">
+
+            Скасувати
+
+        </button>
+
+    `;
+
+
+    document.getElementById("orderCity")
+        .addEventListener("change",updateDelivery);
+
+
+    document.getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+
+function updateDelivery(){
+
+    const select=document.getElementById("orderCity");
+
+    const option=
+        select.options[select.selectedIndex];
+
+    const price=
+        option.getAttribute("data-price");
+
+    if(select.value==="__none__"){
+
+        document.getElementById("deliveryInfo")
+            .textContent=
+            "🚚 Доставка для цього населеного пункту поки не налаштована.";
+
+        return;
+
+    }
+
+    if(price){
+
+        document.getElementById("deliveryInfo")
+            .textContent=
+            "🚚 Доставка: "+
+            Number(price).toLocaleString("uk-UA")+
+            " грн";
+
+    }else{
+
+        document.getElementById("deliveryInfo")
+            .textContent="";
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   ОТПРАВКА ЗАКАЗА
+   ========================================================== */
+
+async function sendOrder(productId){
+
+    const p=products.find(x=>x.id===productId);
+
+    const name=
+        document.getElementById("orderName").value.trim();
+
+    const phone=
+        document.getElementById("orderPhone").value.trim();
+
+    const city=
+        document.getElementById("orderCity").value;
+
+    const address=
+        document.getElementById("orderAddress").value.trim();
+
+    const comment=
+        document.getElementById("orderComment").value.trim();
+
+
+    if(!phone){
+
+        toast("Вкажіть номер телефону");
+
+        return;
+
+    }
+
+    if(!city){
+
+        toast("Оберіть населений пункт");
+
+        return;
+
+    }
+
+    if(city==="__none__"){
+
+        toast("Цей населений пункт поки недоступний");
+
+        return;
+
+    }
+
+    if(!address){
+
+        toast("Вкажіть адресу доставки");
+
+        return;
+
+    }
+
+
+    const zone=
+        delivery.find(d=>d.city===city);
+
+    const deliveryPrice=
+        Number(zone?.delivery_price||0);
+
+    const productPrice=
+        Number(p.price);
+
+
+    const order={
+
+        customer_name:name||"Покупець",
+
+        customer_phone:phone,
+
+        city:city,
+
+        address:address,
+
+        delivery_price:deliveryPrice,
+
+        products_total:productPrice,
+
+        total_price:
+            productPrice+
+            deliveryPrice,
+
+        items:[
+            {
+                product_id:p.id,
+                name:p.name,
+                price:productPrice,
+                quantity:1
+            }
+        ],
+
+        comment:comment,
+
+        status:"new"
+
+    };
+
+
+    try{
+
+        await api(
+            "orders",
+            {
+                method:"POST",
+                headers:{
+                    "Prefer":"return=minimal"
+                },
+                body:JSON.stringify(order)
+            }
+        );
+
+
+        closeModal();
+
+        toast("Замовлення прийнято №");
+
+    }catch(error){
+
+        console.error(error);
+
+        toast("Не вдалося створити замовлення");
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   АДМИНКА
+   ========================================================== */
+
+/*
+Пока это вход первого уровня для нашего прототипа.
+После подключения Supabase Auth заменим его на полноценную
+серверную авторизацию.
+*/
+
+const ADMIN_LOGIN="EINSTEIN";
+
+const ADMIN_PASSWORD="zax228xx";
+
+
+function openAdminLogin(){
+
+    document.getElementById("modalBox").innerHTML=`
+
+        <h2>Вхід в адмін-панель</h2>
+
+        <label>Логін</label>
+
+        <input id="adminLogin">
+
+
+        <label>Пароль</label>
+
+        <input id="adminPassword" type="password">
+
+
+        <button
+            class="blue"
+            onclick="adminLogin()">
+
+            Увійти
+
+        </button>
+
+        <button
+            class="white"
+            onclick="closeModal()">
+
+            Скасувати
+
+        </button>
+
+    `;
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+
+function adminLogin(){
+
+    const login=
+        document.getElementById("adminLogin").value;
+
+    const password=
+        document.getElementById("adminPassword").value;
+
+
+    if(
+        login===ADMIN_LOGIN &&
+        password===ADMIN_PASSWORD
+    ){
+
+        closeModal();
+
+        document.getElementById("shop").style.display="none";
+
+        document.getElementById("header").style.display="none";
+
+        document.getElementById("admin").style.display="block";
+
+        adminProducts();
+
+    }else{
+
+        toast("Невірний логін або пароль");
+
+    }
+
+}
+
+
+
+function logout(){
+
+    document.getElementById("admin").style.display="none";
+
+    document.getElementById("header").style.display="block";
+
+    document.getElementById("shop").style.display="block";
+
+}
+
+
+
+/* ==========================================================
+   АДМИН — ТОВАРЫ
+   ========================================================== */
+
+function adminProducts(){
+
+    const box=document.getElementById("adminContent");
+
+    box.innerHTML=`
+
+        <div class="box">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:10px">
+
+                <h2>Товари</h2>
+
+                <button
+                    class="blue"
+                    onclick="productForm()">
+
+                    + Додати товар
+
+                </button>
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Назва</th>
+                        <th>Ціна</th>
+                        <th>Наявність</th>
+                        <th>Дії</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${
+                        products.map(p=>`
+
+                            <tr>
+
+                                <td>
+                                    ${escapeHtml(p.name)}
+                                </td>
+
+                                <td>
+                                    ${Number(p.price).toLocaleString("uk-UA")}
+                                    грн
+                                </td>
+
+                                <td>
+                                    ${
+                                        p.available
+                                        ?"🟢"
+                                        :"🔴"
+                                    }
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        onclick="productForm('${p.id}')">
+                                        ✏️
+                                    </button>
+
+                                    <button
+                                        onclick="deleteProduct('${p.id}')">
+                                        🗑️
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        `).join("")
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* ==========================================================
+   ФОРМА ТОВАРА
+   ========================================================== */
+
+function productForm(id=null){
+
+    const p=
+        id
+        ?
+        products.find(x=>x.id===id)
+        :
+        {
+            name:"",
+            description:"",
+            price:"",
+            image_url:"",
+            category:"",
+            available:true
+        };
+
+
+    document.getElementById("modalBox").innerHTML=`
+
+        <h2>
+            ${id?"Редагувати товар":"Новий товар"}
+        </h2>
+
+
+        <label>Назва товару *</label>
+
+        <input id="pName"
+               value="${escapeHtml(p.name)}">
+
+
+        <label>Категорія</label>
+
+        <input id="pCategory"
+               value="${escapeHtml(p.category||"")}">
+
+
+        <label>Ціна, грн *</label>
+
+        <input
+            id="pPrice"
+            type="number"
+            value="${p.price}">
+
+
+        <label>Фото товару</label>
+
+        <input
+            id="pImage"
+            placeholder="URL фото"
+            value="${escapeHtml(p.image_url||"")}">
+
+
+        <label>Опис</label>
+
+        <textarea id="pDescription">
+${escapeHtml(p.description||"")}
+        </textarea>
+
+
+        <label>
+
+            <input
+                id="pAvailable"
+                type="checkbox"
+                ${p.available?"checked":""}
+                style="width:auto">
+
+            В наявності
+
+        </label>
+
+
+        <button
+            class="blue"
+            onclick="saveProduct('${id||""}')">
+
+            Зберегти
+
+        </button>
+
+
+        <button
+            class="white"
+            onclick="closeModal()">
+
+            Скасувати
+
+        </button>
+
+    `;
+
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+
+async function saveProduct(id){
+
+    const name=
+        document.getElementById("pName").value.trim();
+
+    const category=
+        document.getElementById("pCategory").value.trim();
+
+    const price=
+        Number(document.getElementById("pPrice").value);
+
+    const image=
+        document.getElementById("pImage").value.trim();
+
+    const description=
+        document.getElementById("pDescription").value.trim();
+
+    const available=
+        document.getElementById("pAvailable").checked;
+
+
+    if(!name||!price){
+
+        toast("Заповніть назву та ціну");
+
+        return;
+
+    }
+
+
+    const data={
+
+        name,
+
+        category,
+
+        price,
+
+        image_url:image,
+
+        description,
+
+        available
+
+    };
+
+
+    try{
+
+        if(id){
+
+            await api(
+                "products?id=eq."+id,
+                {
+                    method:"PATCH",
+                    headers:{
+                        "Prefer":"return=minimal"
+                    },
+                    body:JSON.stringify(data)
+                }
+            );
+
+        }else{
+
+            await api(
+                "products",
+                {
+                    method:"POST",
+                    headers:{
+                        "Prefer":"return=minimal"
+                    },
+                    body:JSON.stringify(data)
+                }
+            );
+
+        }
+
+
+        closeModal();
+
+        await loadProducts();
+
+        adminProducts();
+
+        toast("Товар збережено");
+
+    }catch(error){
+
+        console.error(error);
+
+        toast("Помилка збереження");
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   УДАЛЕНИЕ
+   ========================================================== */
+
+async function deleteProduct(id){
+
+    if(!confirm("Видалити цей товар?"))return;
+
+
+    try{
+
+        await api(
+            "products?id=eq."+id,
+            {
+                method:"DELETE"
+            }
+        );
+
+
+        await loadProducts();
+
+        adminProducts();
+
+        toast("Товар видалено");
+
+    }catch(error){
+
+        toast("Помилка видалення");
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   ЗАКАЗЫ В АДМИНКЕ
+   ========================================================== */
+
+async function adminOrders(){
+
+    const orders=
+        await api(
+            "orders?select=*&order=created_at.desc"
+        );
+
+
+    document.getElementById("adminContent").innerHTML=`
+
+        <div class="box">
+
+            <h2>Замовлення</h2>
+
+
+            ${
+                !orders.length
+                ?
+                "<p>Замовлень поки немає.</p>"
+                :
+                orders.map(o=>`
+
+                    <div
+                        class="box"
+                        style="border:1px solid #ddd">
+
+                        <b>
+                            Замовлення №${o.order_number}
+                        </b>
+
+                        <p>
+                            👤 ${escapeHtml(o.customer_name)}
+                        </p>
+
+                        <p>
+                            📞 ${escapeHtml(o.customer_phone)}
+                        </p>
+
+                        <p>
+                            📍 ${escapeHtml(o.city)},
+                            ${escapeHtml(o.address)}
+                        </p>
+
+                        <p>
+                            💰
+                            ${Number(o.total_price).toLocaleString("uk-UA")}
+                            грн
+                        </p>
+
+                        <p>
+                            🚚
+                            ${Number(o.delivery_price).toLocaleString("uk-UA")}
+                            грн
+                        </p>
+
+                        <p>
+                            Статус:
+                            <b>${escapeHtml(o.status)}</b>
+                        </p>
+
+                        <button
+                            class="blue"
+                            onclick="changeOrderStatus('${o.id}','confirmed')">
+
+                            Підтвердити
+
+                        </button>
+
+                        <button
+                            class="red"
+                            onclick="changeOrderStatus('${o.id}','cancelled')">
+
+                            Скасувати
+
+                        </button>
+
+                    </div>
+
+                `).join("")
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+
+async function changeOrderStatus(id,status){
+
+    try{
+
+        await api(
+            "orders?id=eq."+id,
+            {
+                method:"PATCH",
+                headers:{
+                    "Prefer":"return=minimal"
+                },
+                body:JSON.stringify({status})
+            }
+        );
+
+        adminOrders();
+
+    }catch(e){
+
+        toast("Помилка");
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   ДОСТАВКА
+   ========================================================== */
+
+function adminDelivery(){
+
+    document.getElementById("adminContent").innerHTML=`
+
+        <div class="box">
+
+            <h2>🚚 Доставка</h2>
+
+            <p class="small">
+                Покупець вибирає населений пункт зі списку.
+                Вводити місто вручну не потрібно.
+            </p>
+
+
+            <div id="deliveryList">
+
+                ${delivery.map(d=>`
+
+                    <div class="box">
+
+                        <b>${escapeHtml(d.city)}</b>
+
+                        —
+                        ${Number(d.delivery_price).toLocaleString("uk-UA")}
+                        грн
+
+                        <button
+                            onclick="deleteDelivery('${d.id}')">
+
+                            🗑️
+
+                        </button>
+
+                    </div>
+
+                `).join("")}
+
+            </div>
+
+
+            <h3>Додати населений пункт</h3>
+
+            <label>Назва</label>
+
+            <input id="newCity">
+
+
+            <label>Ціна доставки, грн</label>
+
+            <input
+                id="newDeliveryPrice"
+                type="number">
+
+
+            <button
+                class="blue"
+                onclick="addDelivery()">
+
+                Додати
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+
+async function addDelivery(){
+
+    const city=
+        document.getElementById("newCity")
+        .value
+        .trim();
+
+    const price=
+        Number(
+            document.getElementById("newDeliveryPrice")
+            .value
+        );
+
+
+    if(!city||!price){
+
+        toast("Заповніть дані");
+
+        return;
+
+    }
+
+
+    try{
+
+        await api(
+            "delivery_zones",
+            {
+                method:"POST",
+                headers:{
+                    "Prefer":"return=minimal"
+                },
+                body:JSON.stringify({
+                    city,
+                    delivery_price:price,
+                    active:true
+                })
+            }
+        );
+
+
+        delivery=
+            await api(
+                "delivery_zones?select=*&active=eq.true&order=city.asc"
+            );
+
+
+        adminDelivery();
+
+        toast("Населений пункт додано");
+
+    }catch(e){
+
+        toast("Помилка");
+
+    }
+
+}
+
+
+
+async function deleteDelivery(id){
+
+    if(!confirm("Видалити населений пункт?"))return;
+
+
+    await api(
+        "delivery_zones?id=eq."+id,
+        {
+            method:"DELETE"
+        }
+    );
+
+
+    delivery=
+        await api(
+            "delivery_zones?select=*&active=eq.true&order=city.asc"
+        );
+
+
+    adminDelivery();
+
+}
+
+
+
+/* ==========================================================
+   НАСТРОЙКИ МАГАЗИНА
+   ========================================================== */
+
+function adminSettings(){
+
+    document.getElementById("adminContent").innerHTML=`
+
+        <div class="box">
+
+            <h2>⚙️ Магазин</h2>
+
+
+            <label>Назва магазину</label>
+
+            <input
+                id="setName"
+                value="${escapeHtml(settings.store_name)}">
+
+
+            <label>Телефон</label>
+
+            <input
+                id="setPhone"
+                value="${escapeHtml(settings.phone)}">
+
+
+            <label>Instagram</label>
+
+            <input
+                id="setInstagram"
+                value="${escapeHtml(settings.instagram)}">
+
+
+            <label>Адреса</label>
+
+            <input
+                id="setAddress"
+                value="${escapeHtml(settings.address)}">
+
+
+            <label>Опис</label>
+
+            <textarea
+                id="setDescription">${escapeHtml(settings.description||"")}</textarea>
+
+
+            <button
+                class="blue"
+                onclick="saveSettings()">
+
+                Зберегти
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+
+async function saveSettings(){
+
+    const data={
+
+        store_name:
+            document.getElementById("setName").value.trim(),
+
+        phone:
+            document.getElementById("setPhone").value.trim(),
+
+        instagram:
+            document.getElementById("setInstagram").value.trim().replace("@",""),
+
+        address:
+            document.getElementById("setAddress").value.trim(),
+
+        description:
+            document.getElementById("setDescription").value.trim()
+
+    };
+
+
+    try{
+
+        await api(
+            "store_settings?id=eq.1",
+            {
+                method:"PATCH",
+                headers:{
+                    "Prefer":"return=minimal"
+                },
+                body:JSON.stringify(data)
+            }
+        );
+
+
+        settings={
+            ...settings,
+            ...data
+        };
+
+
+        applySettings();
+
+        toast("Налаштування збережено");
+
+    }catch(e){
+
+        toast("Помилка");
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   ВСПОМОГАТЕЛЬНЫЕ
+   ========================================================== */
+
+async function loadProducts(){
+
+    products=
+        await api(
+            "products?select=*&order=name.asc"
+        );
+
+    renderCategories();
+
+    renderProducts();
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modal")
+        .classList.remove("show");
+
+}
+
+
+function callShop(){
+
+    if(settings){
+
+        location.href=
+            "tel:"+settings.phone;
+
+    }else{
+
+        location.href=
+            "tel:+380985553449";
+
+    }
+
+}
+
+
+function toast(text){
+
+    const t=document.getElementById("toast");
+
+    t.textContent=text;
+
+    t.style.display="block";
+
+    setTimeout(()=>{
+        t.style.display="none";
+    },2500);
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value??"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+document
+    .getElementById("modal")
+    .addEventListener("click",function(e){
+
+        if(e.target===this){
+
+            closeModal();
+
+        }
+
+    });
+
+
+/* ==========================================================
+   START
+   ========================================================== */
+
+loadEverything();
+
+</script>
+
+</body>
+</html>
