@@ -69,4 +69,7 @@ function order(id){let p=db.products.find(x=>x.id===id);$("modalbox").innerHTML=
 function createOrder(id){if(!on.value.trim()||!op.value.trim()||!opl.value.trim()||!oa.value.trim())return msg("Заповніть обовʼязкові поля");let p=db.products.find(x=>x.id===id),date=new Date().toISOString().slice(0,10),num=db.orders.filter(x=>x.date===date).length+1;db.orders.push({num,date,product:p.name,price:p.price,name:on.value,phone:op.value,place:opl.value,address:oa.value,comment:oc.value,status:"Новий"});save();closeModal();msg("Замовлення №"+num+" прийнято")}
 function closeModal(){$("modal").classList.remove("show")}$("modal").onclick=e=>{if(e.target===$("modal"))closeModal()}
 if(sessionStorage.getItem("admin")==="1")showAdmin();else openSite();
-</script></body></html>
+const SUPABASE_URL = 'https://yhraejryqqnewudzgxoa.supabaseconst SUPABASE_KEY = 'sb_publishable_ErW7J59itfI5pFcFP4B5GA_6XCmCfiT';
+  const SUPABASE_KEY = 'sb_publishable_ErW7J59itfI5pFcFP4B5GA_6XCmCfiT';
+
+/script></body></html>
